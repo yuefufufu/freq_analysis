@@ -23,8 +23,6 @@ num2 = 2
 for alphabet in alphabet_list:
     csv_file = os.path.expanduser('~/catkin_ws/rosbag/honjikken/') + alphabet + '_force_' + str(num1) + '-' + str(num2) + '-.csv'
     png_file = os.path.expanduser('~/catkin_ws/rosbag/honjikken/fig_force/') + alphabet + '_forcexy_' + str(num1) + '-' + str(num2) + '.png'
-    # csv_file = os.path.expanduser('~/catkin_ws/rosbag/next/ken/u_220f.csv')
-    # png_file = os.path.expanduser('~/catkin_ws/rosbag/next/ken/u_220f.png')
 
     df=pd.read_csv(csv_file)
 
@@ -42,18 +40,13 @@ for alphabet in alphabet_list:
     df_original = df
     df_original = df_original.reindex(columns=["%time","field.linear.z","field.linear.y","field.linear.x","field.angular.x","field.angular.y","field.angular.z"])
     print(df_original)
-    df_original["field.linear.z"] = df_original["field.linear.z"] + 4
-
-    print(df_original)
-
-
 
     df=df.rename(columns={"%time":"time","field.linear.x":"lin.x","field.linear.y":"lin.y","field.linear.z":"lin.z","field.angular.x":"ang.x","field.angular.y":"ang.y","field.angular.z":"ang.z"})
 
     df = df[["time","lin.z"]]
     # df = df[["time","lin.x","lin.y","lin.z","ang.z"]]
 
-    df.to_csv('~/catkin_ws/rosbag/yobikentou_1/data_change.csv',index=False)
+    df.to_csv('~/catkin_ws/rosbag/data_change.csv',index=False)
 
     def calc_fft(data,samplerate):
         spectrum=fftpack.fft(data)
@@ -80,7 +73,7 @@ for alphabet in alphabet_list:
         df_fft.to_csv(out_file)
         return df,df_fft
 
-    df,df_fft=csv_fft(in_file='~/catkin_ws/rosbag/yobikentou_1/data_change.csv',out_file='~/catkin_ws/rosbag/yobikentou_1/data_fft.csv')
+    df,df_fft=csv_fft(in_file='~/catkin_ws/rosbag/data_change.csv',out_file='~/catkin_ws/rosbag/data_fft.csv')
 
 
     # df_fft["lin.x"]=(df_fft["lin.x"].values/df_fft["lin.x"].max(axis=0))
